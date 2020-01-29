@@ -9,7 +9,15 @@ contract MyContract{
         name = nname;
     }
     
-    function getName() public view returns (string memory) {
+    function getName() public view returns(string memory) {
         return name;
+    }
+    
+    function setAge(uint nage) public {
+        age = nage;
+    }
+    
+    function getAge() public view returns(uint){
+        return age;
     }
 }
