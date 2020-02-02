@@ -1,0 +1,186 @@
+pragma solidity >=0.4.22 <0.6.0;
+
+contract UserInformation {
+    //Profile data
+    address private uId;
+    address private uPhoto;
+    address private uStatus;
+    bool private uSex;
+    string private uName;
+    string private uDOB;
+    string private uCity;
+    string private uCollege;
+    
+    constructor(address id, address photo, address status, bool sex, string name, string dob, string city, string college) {
+        uId = id;
+        uPhoto = photo;
+        uStatus = status;
+        uSex = sex;
+        uName = name;
+        uDOB = dob;
+        uCity = city;
+        uCollege = college;
+    }
+    
+    function getUserInformation() public returns(address, address, address, bool, string, string, string, string) {
+        return (uId, uPhoto, uStatus, uSex, uName, uDOB, uCity, uCollege);
+    }
+    
+    function setId(address id) {
+        uId = id;
+    }
+    
+    function setPhoto(address photo) {
+        uPhoto = photo;
+    }
+    
+    function setSatus(address status) {
+        uStatus = status;
+    }
+    
+    function setSex(bool sex) {
+        uSex = sex;
+    }
+    
+    function setName(string name) {
+        uName = name;
+    }
+    
+    function setDOB(string dob) {
+        uDOB = dob;   
+    }
+    
+    function setCity(string city) {
+        uCity = city;
+    }
+    
+    function setCollege(string college) {
+        uCollege = college;
+    }
+    
+    function getId() returns(address) {
+        return uId;
+    }
+    
+    function getPhoto() returns(address) {
+        return uPhoto;
+    }
+    
+    function getSatus() returns(address) {
+        return uStatus;
+    }
+    
+    function getSex() returns(bool) {
+        return uSex;
+    }
+    
+    function getName() returns(string) {
+        return uName;
+    }
+    
+    function getDOB() returns(string) {
+        return uDOB;   
+    }
+    
+    function getCity() returns(string) {
+        return uCity;
+    }
+    
+    function getCollege() returns(string) {
+        return uCollege;
+    }
+}
+
+
+contract Users {
+    //Map uName with uId
+    mapping(string => address) uList;
+    
+    function addUser(string name, address id) {
+        uList[name] = id;
+    }
+    
+    function getUSer(string name) returns(address) {
+        return uList[name];
+    }
+}
+
+
+contract UserAuthentication {
+    //User credetials
+    string private uName;
+    string private uPass;
+    address private uId;
+    string private question;
+    string private answer;
+    
+    function regiter(string name, string pass, address id, string que, string ans) {
+        uName = name;
+        uPass = pass;
+        uId = id;
+        question = que;
+        answer = ans;
+    }
+    
+    function authenticate(string name, string pass) returns(bool) {
+        if(uName == name && uPass == pass) {
+            return true;
+        }
+        else
+            return false;
+    }
+}
+
+
+contract UserContents {
+    //User Media data
+    address private sId;
+    address private rId;
+    address private contentId;
+    string private dateAndTime;
+}
+
+
+contract UserFriends {
+    //User Friends
+    address private uId;
+    address private friendList [];
+}
+
+
+contract UserGroups {
+    //User Groups   
+    address private uId;
+    address private groupList [];
+}
+
+
+contract Groups {
+    //Map gName with gId
+    mapping(string => address) gList;
+}
+
+
+contract GroupInformation {
+    //Group Details
+    address private gId;
+    address private gPhoto;
+    string private gName;
+    string private gIntroductio;
+    
+}
+
+
+contract GroupContents {
+    //Group Media data
+    address private gId;
+    address private contentId;
+    string private dateAndTime;
+}
+
+
+contract GroupMembers {
+    //Group Members
+    address private gId;
+    address private memberList [];
+}
