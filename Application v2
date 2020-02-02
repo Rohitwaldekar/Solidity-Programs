@@ -22,7 +22,7 @@ contract UserInformation {
         uCollege = college;
     }
     
-    function getUserInformation() public returns(address, address, address, bool, string, string, string, string) {
+    function getUserInformation() public returns(address, address, address, bool, string memory, string memory, string memory, string memory) {
         return (uId, uPhoto, uStatus, uSex, uName, uDOB, uCity, uCollege);
     }
     
@@ -42,19 +42,19 @@ contract UserInformation {
         uSex = sex;
     }
     
-    function setName(string name) public {
+    function setName(string memory name) public {
         uName = name;
     }
     
-    function setDOB(string dob) public {
+    function setDOB(string memory dob) public {
         uDOB = dob;   
     }
     
-    function setCity(string city) public {
+    function setCity(string memory city) public {
         uCity = city;
     }
     
-    function setCollege(string college) public {
+    function setCollege(string memory college) public {
         uCollege = college;
     }
     
@@ -74,19 +74,19 @@ contract UserInformation {
         return uSex;
     }
     
-    function getName() public returns(string) {
+    function getName() public returns(string memory) {
         return uName;
     }
     
-    function getDOB() public returns(string) {
+    function getDOB() public returns(string memory) {
         return uDOB;   
     }
     
-    function getCity() public returns(string) {
+    function getCity() public returns(string memory) {
         return uCity;
     }
     
-    function getCollege() public returns(string) {
+    function getCollege() public returns(string memory) {
         return uCollege;
     }
 }
@@ -96,11 +96,11 @@ contract Users {
     //Map uName with uId
     mapping(string => address) uList;
     
-    function addUser(string name, address id) public {
+    function addUser(string memory name, address id) public {
         uList[name] = id;
     }
     
-    function getUSer(string name) public returns(address) {
+    function getUSer(string memory name) public returns(address) {
         return uList[name];
     }
 }
@@ -114,7 +114,7 @@ contract UserAuthentication {
     string private question;
     string private answer;
     
-    function regiter(string name, string pass, address id, string que, string ans) public {
+    function regiter(string memory name, string memory pass, address id, string memory que, string memory ans) public {
         uName = name;
         uPass = pass;
         uId = id;
@@ -122,8 +122,9 @@ contract UserAuthentication {
         answer = ans;
     }
     
-    function authenticate(string name, string pass) public returns(bool) {
-        if(uName == name && uPass == pass) {
+    function authenticate(string memory name, string memory pass) public returns(bool) {
+        
+        if(bytes32(uName) == bytes32(n) && bytes32(uPass) == bytes32(p)) {
             return true;
         }
         else
@@ -139,7 +140,7 @@ contract UserContents {
     address private contentId;
     string private dateAndTime;
     
-    function trasation(address s, address r, address content, string dat) public {
+    function trasation(address s, address r, address content, string memory dat) public {
         sId = s;
         rId = r;
         contentId = content;
@@ -153,12 +154,12 @@ contract UserFriends {
     address private uId;
     address[] private friendList;
     
-    function getFriend(address id) public returns(address []) {
+    function getFriend(address id) public returns(address[] memory) {
         return friendList;
     }
     
     function addFriend(address f) public {
-        friendList = f;
+
     }
     
     function delFriend(address f) public {
@@ -197,11 +198,11 @@ contract GroupInformation {
         gPhoto = photo;
     }
     
-    function setName(string name) public {
+    function setName(string memory name) public {
         gName = name;
     }
     
-    function setIntroductio(string intro) public{
+    function setIntroductio(string memory intro) public{
         gIntroduction = intro;   
     }
     
@@ -213,11 +214,11 @@ contract GroupInformation {
         return gPhoto;
     }
     
-    function getName() public returns(string) {
+    function getName() public returns(string memory) {
         return gName;
     }
     
-    function getIntroduction() public returns(string) {
+    function getIntroduction() public returns(string memory) {
         return gIntroduction;   
     }
 }
@@ -227,11 +228,11 @@ contract Groups {
     //Map gName with gId
     mapping(string => address) gList;
     
-    function addGroup(string name, address id) public {
+    function addGroup(string memory name, address id) public {
         gList[name] = id;
     }
     
-    function getGroup(string name) public returns(address) {
+    function getGroup(string memory name) public returns(address) {
         return gList[name];
     }
 }
@@ -243,7 +244,7 @@ contract GroupContents {
     address private contentId;
     string private dateAndTime;
     
-    function trasation(address id, address content, string dat) public {
+    function trasation(address id, address content, string memory dat) public {
         gId = id;
         contentId = content;
         dateAndTime = dat;
@@ -256,12 +257,12 @@ contract GroupMembers {
     address private gId;
     address[] private memberList;
     
-    function getMembers(address id) public returns(address []) {
+    function getMembers(address id) public returns(address[] memory) {
         return memberList;
     }
     
     function addMember(address m) public {
-        memberList = m;
+ 
     }
     
     function delMember(address m) public {
