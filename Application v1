@@ -138,6 +138,13 @@ contract UserContents {
     address private rId;
     address private contentId;
     string private dateAndTime;
+    
+    function trasation(address s, address r, address content, string dat) {
+        sId = s;
+        rId = r;
+        contentId = content;
+        dateAndTime = dat;
+    }
 }
 
 
@@ -145,6 +152,18 @@ contract UserFriends {
     //User Friends
     address private uId;
     address private friendList [];
+    
+    function getFriend(address id) returns(address []) {
+        return friendList;
+    }
+    
+    function addFriend(address f) {
+        friendList = f;
+    }
+    
+    function delFriend(address f) {
+        
+    }
 }
 
 
@@ -152,12 +171,28 @@ contract UserGroups {
     //User Groups   
     address private uId;
     address private groupList [];
+    
+    function addGroup(address g) {
+        
+    }
+    
+    function delGroup(address g) {
+        
+    }
 }
 
 
 contract Groups {
     //Map gName with gId
     mapping(string => address) gList;
+    
+    function addGroup(string name, address id) {
+        gList[name] = id;
+    }
+    
+    function getGroup(string name) returns(address) {
+        return gList[name];
+    }
 }
 
 
@@ -166,8 +201,39 @@ contract GroupInformation {
     address private gId;
     address private gPhoto;
     string private gName;
-    string private gIntroductio;
+    string private gIntroduction;
     
+    function setId(address id) {
+        gId = id;
+    }
+    
+    function setPhoto(address photo) {
+        gPhoto = photo;
+    }
+    
+    function setName(string name) {
+        gName = name;
+    }
+    
+    function setIntroductio(string intro) {
+        gIntroduction = intro;   
+    }
+    
+    function getId() returns(address) {
+        return gId;
+    }
+    
+    function getPhoto() returns(address) {
+        return gPhoto;
+    }
+    
+    function getName() returns(string) {
+        return gName;
+    }
+    
+    function getIntroduction() returns(string) {
+        return gIntroduction;   
+    }
 }
 
 
@@ -176,6 +242,12 @@ contract GroupContents {
     address private gId;
     address private contentId;
     string private dateAndTime;
+    
+    function trasation(address id, address content, string dat) {
+        gId = id;
+        contentId = content;
+        dateAndTime = dat;
+    } 
 }
 
 
@@ -183,4 +255,16 @@ contract GroupMembers {
     //Group Members
     address private gId;
     address private memberList [];
+    
+    function getMembers(address id) returns(address []) {
+        return memberList;
+    }
+    
+    function addMember(address m) {
+        memberList = m;
+    }
+    
+    function delMember(address m) {
+        
+    }
 }
