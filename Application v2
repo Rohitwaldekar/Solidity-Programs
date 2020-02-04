@@ -123,8 +123,7 @@ contract UserAuthentication {
     }
     
     function authenticate(string memory name, string memory pass) public returns(bool) {
-        
-        if(bytes32(uName) == bytes32(n) && bytes32(uPass) == bytes32(p)) {
+        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
             return true;
         }
         else
