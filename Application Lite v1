@@ -80,9 +80,10 @@ contract Users {
         uList[name] = id;
     }
     
-    function getUSer(string memory name) public returns(address) {
+    function getUser(string memory name) public returns(address) {
         return uList[name];
     }
+    //Remove User
 }
 
 
@@ -109,6 +110,14 @@ contract UserAuthentication {
         else
             return false;
     }
+    
+    function changePass() public {
+        
+    }
+    
+    function forgrtPass() public {
+        
+    }
 }
 
 
@@ -125,6 +134,7 @@ contract UserContents {
         contentId = content;
         dateAndTime = dat;
     }
+    //Get content
 }
 
 
@@ -133,7 +143,7 @@ contract UserFriends {
     address private uId;
     address[] private friendList;
     
-    function getFriend(address id) public returns(address[] memory) {
+    function getFriends(address id) public returns(address[] memory) {
         return friendList;
     }
     
@@ -142,6 +152,10 @@ contract UserFriends {
     }
     
     function delFriend(address f) public {
+        
+    }
+    
+    function reqFriend(address f) public {
         
     }
 }
