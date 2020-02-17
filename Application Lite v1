@@ -1,0 +1,147 @@
+pragma solidity >=0.4.22 <0.7.0;
+
+contract UserInformation {
+    //Profile data
+    address private uId;
+    address private uPhoto;
+    string private uName;
+    string private uDOB;
+    string private uCity;
+    string private uCollege;
+    
+    constructor(address id, address photo, address status, bool sex, string memory name, string memory dob, string memory city, string memory college) public {
+        uId = id;
+        uPhoto = photo;
+        uName = name;
+        uDOB = dob;
+        uCity = city;
+        uCollege = college;
+    }
+    
+    function getUserInformation() public returns(address, address, string memory, string memory, string memory, string memory) {
+        return (uId, uPhoto, uName, uDOB, uCity, uCollege);
+    }
+    
+    function setId(address id) public {
+        uId = id;
+    }
+    
+    function setPhoto(address photo) public {
+        uPhoto = photo;
+    }
+    
+    function setName(string memory name) public {
+        uName = name;
+    }
+    
+    function setDOB(string memory dob) public {
+        uDOB = dob;   
+    }
+    
+    function setCity(string memory city) public {
+        uCity = city;
+    }
+    
+    function setCollege(string memory college) public {
+        uCollege = college;
+    }
+    
+    function getId() public returns(address) {
+        return uId;
+    }
+    
+    function getPhoto() public returns(address) {
+        return uPhoto;
+    }
+    
+    function getName() public returns(string memory) {
+        return uName;
+    }
+    
+    function getDOB() public returns(string memory) {
+        return uDOB;   
+    }
+    
+    function getCity() public returns(string memory) {
+        return uCity;
+    }
+    
+    function getCollege() public returns(string memory) {
+        return uCollege;
+    }
+}
+
+
+contract Users {
+    //Map uName with uId
+    mapping(string => address) uList;
+    
+    function addUser(string memory name, address id) public {
+        uList[name] = id;
+    }
+    
+    function getUSer(string memory name) public returns(address) {
+        return uList[name];
+    }
+}
+
+
+contract UserAuthentication {
+    //User credetials
+    string private uName;
+    string private uPass;
+    address private uId;
+    string private question;
+    string private answer;
+    
+    function regiter(string memory name, string memory pass, address id, string memory que, string memory ans) public {
+        uName = name;
+        uPass = pass;
+        uId = id;
+        question = que;
+        answer = ans;
+    }
+    
+    function authenticate(string memory name, string memory pass) public returns(bool) {
+        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
+            return true;
+        }
+        else
+            return false;
+    }
+}
+
+
+contract UserContents {
+    //User Media data
+    address private sId;
+    address private rId;
+    address private contentId;
+    string private dateAndTime;
+    
+    function trasation(address s, address r, address content, string memory dat) public {
+        sId = s;
+        rId = r;
+        contentId = content;
+        dateAndTime = dat;
+    }
+}
+
+
+contract UserFriends {
+    //User Friends
+    address private uId;
+    address[] private friendList;
+    
+    function getFriend(address id) public returns(address[] memory) {
+        return friendList;
+    }
+    
+    function addFriend(address f) public {
+
+    }
+    
+    function delFriend(address f) public {
+        
+    }
+}
