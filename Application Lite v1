@@ -9,7 +9,7 @@ contract Users {
         uList[name] = id;
     }
     
-    function getUser(string memory name) public returns(address) {
+    function getUser(string memory name) public view returns(address) {
         return uList[name];
     }
     //Remove User
@@ -31,7 +31,7 @@ contract UserInformation {
     }
     mapping(address => data) public Person;
     
-    constructor(address id, address photo, address status, bool sex, string memory name, string memory dob, string memory city, string memory college) public {
+    constructor(address id, address photo, string memory name, string memory dob, string memory city, string memory college) public {
         //Person ob = Person[id];
         
         Person[id].uPhoto = photo;
@@ -66,23 +66,23 @@ contract UserInformation {
         Person[id].uCollege = college;
     }
     
-    function getPhoto(address id) public returns(address) {
+    function getPhoto(address id) public view returns(address) {
         return Person[id].uPhoto;
     }
     
-    function getName(address id) public returns(string memory) {
+    function getName(address id) public view returns(string memory) {
         return Person[id].uName;
     }
     
-    function getDOB(address id) public returns(string memory) {
+    function getDOB(address id) public view returns(string memory) {
         return Person[id].uDOB;   
     }
     
-    function getCity(address id) public returns(string memory) {
+    function getCity(address id) public view returns(string memory) {
         return Person[id].uCity;
     }
     
-    function getCollege(address id) public returns(string memory) {
+    function getCollege(address id) public view returns(string memory) {
         return Person[id].uCollege;
     }
 }
@@ -104,7 +104,7 @@ contract UserAuthentication {
         answer = ans;
     }
     
-    function authenticate(string memory name, string memory pass) public returns(bool) {
+    function authenticate(string memory name, string memory pass) public view returns(bool) {
         if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
             return true;
         }
@@ -116,7 +116,7 @@ contract UserAuthentication {
         uPass = pass;
     }
     
-    function forgrtPass(string memory que, string memory ans) public returns(bool) {
+    function forgrtPass(string memory que, string memory ans) public view returns(bool) {
         if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
             return true;
         }
@@ -132,6 +132,10 @@ contract UserContents {
     address private rId;
     address private contentId;
     string private dateAndTime;
+    
+    struct tran {
+        mapping(string => address) cont;  
+    }
     
     function trasation(address s, address r, address content, string memory dat) public {
         sId = s;
