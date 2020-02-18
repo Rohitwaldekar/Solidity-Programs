@@ -148,23 +148,36 @@ contract UserContents {
 
 contract UserFriends {
     //User Friends
-    address private uId;
-    address[] private friendList;
-    
-    function getFriends(address id) public returns(address[] memory) {
-        return friendList;
+    struct data{
+        mapping(string => address) fri;    
     }
     
-    function addFriend(address f) public {
-
+    mapping(address => data) MyFri;
+    mapping(address => data) ReqFri;
+    mapping(address => data) SedFri;
+    //Fri Handling
+    function delMyFri(address id, string memory name) public {
+        delete MyFri[id].fri[name];
     }
     
-    function delFriend(address f) public {
-        
+    function addMyFri(address id, string memory name, address add) public {
+        MyFri[id].fri[name] = add;
+    }
+    ///Req Handling
+    function acceptReqFri(address id, string memory name, address add) public {
+        addMyFri(id, name, add);
     }
     
-    function reqFriend(address f) public {
-        
+    function rejectReqFri(address id, string memory name) public {
+        delete ReqFri[id].fri[name];   
+    }
+    //Sed Req Handling
+    function canSendFri(address id, string memory name) public {
+        delete SedFri[id].fri[name];
+    }
+    
+    function addSendFri(address id, string memory name, address add) public {
+        SedFri[id].fri[name] = add;
     }
 }
-   
+  
