@@ -133,9 +133,15 @@ contract UserContents {
     address private contentId;
     string private dateAndTime;
     
-    struct tran {
+    struct trasation {
         mapping(string => address) cont;  
     }
+    
+    struct utrasation {
+        mapping(address => trasation) udat;  
+    }
+    
+    mapping(address => utrasation) content;
     
     function trasation(address s, address r, address content, string memory dat) public {
         sId = s;
