@@ -41,10 +41,10 @@ contract UserInformation {
         Person[id].uCollege = college;
     }
     
-    function getUserInformation(address id) public returns(data memory) {
+    /*function getUserInformation(address id) public returns(data memory) {
         //return (uId, uPhoto, uName, uDOB, uCity, uCollege);
         return Person[id];
-    }
+    }*/
     
     function setPhoto(address id, address photo) public {
         Person[id].uPhoto = photo;
@@ -112,12 +112,16 @@ contract UserAuthentication {
             return false;
     }
     
-    function changePass() public {
-        
+    function changePass(string memory pass) public {
+        uPass = pass;
     }
     
-    function forgrtPass() public {
-        
+    function forgrtPass(string memory que, string memory ans) public returns(bool) {
+        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
+            return true;
+        }
+        else
+            return false;
     }
 }
 
