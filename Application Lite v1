@@ -127,31 +127,23 @@ contract UserAuthentication {
 
 
 contract UserContents {
-    //User Media data
-    address private sId;
-    address private rId;
-    address private contentId;
-    string private dateAndTime;
-    
-    struct trasation {
+    //date input
+    struct tran {
         mapping(string => address) cont;  
     }
-    
+    //receiver address input
     struct utrasation {
-        mapping(address => trasation) udat;  
+        mapping(address => tran) udat;  
     }
-    
+    //sender address input
     mapping(address => utrasation) content;
     
-    function trasation(address s, address r, address content, string memory dat) public {
-        sId = s;
-        rId = r;
-        contentId = content;
-        dateAndTime = dat;
+    function transaction(address s, address r, address con, string memory dat) public {
+        content[s].udat[r].cont[dat] = con;
     }
     //Get content
-    function getContent() public {
-        
+    function getContent(address s, address r, address con, string memory dat) public returns(tran memory){
+        return content[s].udat[r]; 
     }
 }
 
@@ -190,4 +182,4 @@ contract UserFriends {
         SedFri[id].fri[name] = add;
     }
 }
-  
+   
