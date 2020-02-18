@@ -1,77 +1,6 @@
 pragma solidity >=0.4.22 <0.7.0;
 
-contract UserInformation {
-    //Profile data
-    address private uId;
-    address private uPhoto;
-    string private uName;
-    string private uDOB;
-    string private uCity;
-    string private uCollege;
-    
-    constructor(address id, address photo, address status, bool sex, string memory name, string memory dob, string memory city, string memory college) public {
-        uId = id;
-        uPhoto = photo;
-        uName = name;
-        uDOB = dob;
-        uCity = city;
-        uCollege = college;
-    }
-    
-    function getUserInformation() public returns(address, address, string memory, string memory, string memory, string memory) {
-        return (uId, uPhoto, uName, uDOB, uCity, uCollege);
-    }
-    
-    function setId(address id) public {
-        uId = id;
-    }
-    
-    function setPhoto(address photo) public {
-        uPhoto = photo;
-    }
-    
-    function setName(string memory name) public {
-        uName = name;
-    }
-    
-    function setDOB(string memory dob) public {
-        uDOB = dob;   
-    }
-    
-    function setCity(string memory city) public {
-        uCity = city;
-    }
-    
-    function setCollege(string memory college) public {
-        uCollege = college;
-    }
-    
-    function getId() public returns(address) {
-        return uId;
-    }
-    
-    function getPhoto() public returns(address) {
-        return uPhoto;
-    }
-    
-    function getName() public returns(string memory) {
-        return uName;
-    }
-    
-    function getDOB() public returns(string memory) {
-        return uDOB;   
-    }
-    
-    function getCity() public returns(string memory) {
-        return uCity;
-    }
-    
-    function getCollege() public returns(string memory) {
-        return uCollege;
-    }
-}
-
-
+//Basically use To Find Perticular Friend
 contract Users {
     //Map uName with uId
     mapping(string => address) uList;
@@ -84,6 +13,78 @@ contract Users {
         return uList[name];
     }
     //Remove User
+    function delUSer(string memory name) public {
+        delete uList[name];
+    }
+}
+
+
+contract UserInformation {
+    //Profile data
+    address private uId;
+    struct data{
+        address uPhoto;
+        string uName;
+        string uDOB;
+        string uCity;
+        string uCollege;   
+    }
+    mapping(address => data) Person;
+    
+    constructor(address id, address photo, address status, bool sex, string memory name, string memory dob, string memory city, string memory college) public {
+        var ob = Person[id];
+        
+        ob.uPhoto = photo;
+        ob.uName = name;
+        ob.uDOB = dob;
+        ob.uCity = city;
+        ob.uCollege = college;
+    }
+    
+    function getUserInformation(address id) public returns(address, string memory, string memory, string memory, string memory) {
+        //return (uId, uPhoto, uName, uDOB, uCity, uCollege);
+        return Person[id];
+    }
+    
+    function setPhoto(address id, address photo) public {
+        uPhoto = photo;
+    }
+    
+    function setName(address id, string memory name) public {
+        uName = name;
+    }
+    
+    function setDOB(address id, string memory dob) public {
+        uDOB = dob;   
+    }
+    
+    function setCity(address id, string memory city) public {
+        uCity = city;
+    }
+    
+    function setCollege(address id, string memory college) public {
+        uCollege = college;
+    }
+    
+    function getPhoto(address id) public returns(address) {
+        return uPhoto;
+    }
+    
+    function getName(address id) public returns(string memory) {
+        return uName;
+    }
+    
+    function getDOB(address id) public returns(string memory) {
+        return uDOB;   
+    }
+    
+    function getCity(address id) public returns(string memory) {
+        return uCity;
+    }
+    
+    function getCollege(address id) public returns(string memory) {
+        return uCollege;
+    }
 }
 
 
@@ -135,6 +136,9 @@ contract UserContents {
         dateAndTime = dat;
     }
     //Get content
+    function getContent() public {
+        
+    }
 }
 
 
