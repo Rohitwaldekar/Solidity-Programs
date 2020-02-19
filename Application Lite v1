@@ -3,18 +3,18 @@ pragma solidity >=0.4.22 <0.7.0;
 //Basically use To Find Perticular Friend
 contract Users {
     //Map uName with uId
-    mapping(string => address) uList;
+    mapping(string => address) UList;
     
     function addUser(string memory name, address id) public {
-        uList[name] = id;
+        UList[name] = id;
     }
     
     function getUser(string memory name) public view returns(address) {
-        return uList[name];
+        return UList[name];
     }
     //Remove User
     function delUSer(string memory name) public {
-        delete uList[name];
+        delete UList[name];
     }
 }
 
@@ -31,7 +31,8 @@ contract UserInformation {
     }
     mapping(address => data) public Person;
     
-    constructor(address id, address photo, string memory name, string memory dob, string memory city, string memory college) public {
+    constructor(address id, address photo, string memory name, string memory dob, string memory city, string memory college)
+    public {
         //Person ob = Person[id];
         
         Person[id].uPhoto = photo;
@@ -40,11 +41,6 @@ contract UserInformation {
         Person[id].uCity = city;
         Person[id].uCollege = college;
     }
-    
-    /*function getUserInformation(address id) public returns(data memory) {
-        //return (uId, uPhoto, uName, uDOB, uCity, uCollege);
-        return Person[id];
-    }*/
     
     function setPhoto(address id, address photo) public {
         Person[id].uPhoto = photo;
@@ -64,26 +60,6 @@ contract UserInformation {
     
     function setCollege(address id, string memory college) public {
         Person[id].uCollege = college;
-    }
-    
-    function getPhoto(address id) public view returns(address) {
-        return Person[id].uPhoto;
-    }
-    
-    function getName(address id) public view returns(string memory) {
-        return Person[id].uName;
-    }
-    
-    function getDOB(address id) public view returns(string memory) {
-        return Person[id].uDOB;   
-    }
-    
-    function getCity(address id) public view returns(string memory) {
-        return Person[id].uCity;
-    }
-    
-    function getCollege(address id) public view returns(string memory) {
-        return Person[id].uCollege;
     }
 }
 
@@ -105,7 +81,8 @@ contract UserAuthentication {
     }
     
     function authenticate(string memory name, string memory pass) public view returns(bool) {
-        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
+        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && 
+        keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
             return true;
         }
         else
@@ -117,7 +94,8 @@ contract UserAuthentication {
     }
     
     function forgrtPass(string memory que, string memory ans) public view returns(bool) {
-        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
+        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && 
+        keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
             return true;
         }
         else
