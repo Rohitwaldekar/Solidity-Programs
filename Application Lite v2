@@ -1,1 +1,166 @@
+pragma solidity >=0.4.22 <0.7.0;
 
+//To remove account, must delUser, remove UserInformation, remove authentication constrains
+
+
+//Basically use To Find Perticular Friend
+contract Users {
+    //Map uName with uId
+    mapping(string => address) UList;
+    //Must call by New User instance
+    function addUser(string memory name, address id) public {
+        UList[name] = id;
+    }
+    
+    function getUser(string memory name) public view returns(address) {
+        return UList[name];
+    }
+    //Remove User
+    //Must call by User instance
+    function delUser(string memory name) public {
+        delete UList[name];
+    }
+}
+
+
+contract UserInformation {
+    //Profile data
+    struct data{
+        address uPhoto;
+        string uName;
+        string uDOB;
+        string uCity;
+        string uCollege;   
+    }
+    mapping(address => data) public Person;
+    
+    function newUser(address id, address photo, string memory name, string memory dob, string memory city, string memory college)
+    public {
+
+        Person[id].uPhoto = photo;
+        Person[id].uName = name;
+        Person[id].uDOB = dob;
+        Person[id].uCity = city;
+        Person[id].uCollege = college;
+    }
+    
+    function delUser(address id) public {
+        delete Person[id];
+    }
+    
+    function setPhoto(address id, address photo) public {
+        Person[id].uPhoto = photo;
+    }
+    
+    function setName(address id, string memory name) public {
+        Person[id].uName = name;
+    }
+    
+    function setDOB(address id, string memory dob) public {
+        Person[id].uDOB = dob;   
+    }
+    
+    function setCity(address id, string memory city) public {
+        Person[id].uCity = city;
+    }
+    
+    function setCollege(address id, string memory college) public {
+        Person[id].uCollege = college;
+    }
+}
+
+
+contract UserAuthentication {
+    //User credetials
+    struct auth{
+        string uName;
+        string uPass;
+        string question;
+        string answer;   
+    }
+    mapping(address => auth) public constrains;
+    
+    function regiter(address id, string memory name, string memory pass, string memory que, string memory ans) public {
+        uName = name;
+        uPass = pass;
+        uId = id;
+        question = que;
+        answer = ans;
+    }
+    
+    function authenticate(string memory name, string memory pass) public view returns(bool) {
+        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && 
+        keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    function changePass(string memory pass) public {
+        uPass = pass;
+    }
+    
+    function forgrtPass(string memory que, string memory ans) public view returns(bool) {
+        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && 
+        keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
+            return true;
+        }
+        else
+            return false;
+    }
+}
+
+
+contract UserContents {
+    //date input
+    struct chat {
+        mapping(string => address) tran;
+    }
+
+    mapping(address => mapping(address => chat)) content;
+    
+    function transaction(address s, address r, string memory dat, address con) public {
+        content[s][r].tran[dat] = con;
+    }
+    //Get content
+    function delContent(address s, address r, string memory dat) public {
+        delete content[s][r].tran[dat]; 
+    }
+}
+
+
+contract UserFriends {
+    //User Friends
+    struct data{
+        mapping(string => address) fri;    
+    }
+    
+    mapping(address => data) MyFri;
+    mapping(address => data) ReqFri;
+    mapping(address => data) SedFri;
+    //Fri Handling
+    function delMyFri(address id, string memory name) public {
+        delete MyFri[id].fri[name];
+    }
+    
+    function addMyFri(address id, string memory name, address add) public {
+        MyFri[id].fri[name] = add;
+    }
+    ///Req Handling
+    function acceptReqFri(address id, string memory name, address add) public {
+        addMyFri(id, name, add);
+    }
+    
+    function rejectReqFri(address id, string memory name) public {
+        delete ReqFri[id].fri[name];   
+    }
+    //Sed Req Handling
+    function canSendFri(address id, string memory name) public {
+        delete SedFri[id].fri[name];
+    }
+    
+    function addSendFri(address id, string memory name, address add) public {
+        SedFri[id].fri[name] = add;
+    }
+}
