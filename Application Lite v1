@@ -128,22 +128,18 @@ contract UserAuthentication {
 
 contract UserContents {
     //date input
-    struct tran {
-        mapping(string => address) cont;  
+    struct chat {
+        mapping(string => address) tran;
     }
-    //receiver address input
-    struct utrasation {
-        mapping(address => tran) udat;  
-    }
-    //sender address input
-    mapping(address => utrasation) content;
+
+    mapping(address => mapping(address => chat)) content;
     
-    function transaction(address s, address r, address con, string memory dat) public {
-        content[s].udat[r].cont[dat] = con;
+    function transaction(address s, address r, string memory dat, address con) public {
+        content[s][r].tran[dat] = con;
     }
     //Get content
-    function getContent(address s, address r, address con, string memory dat) public returns(tran memory){
-        return content[s].udat[r]; 
+    function delContent(address s, address r, string memory dat) public {
+        delete content[s][r].tran[dat]; 
     }
 }
 
@@ -182,4 +178,3 @@ contract UserFriends {
         SedFri[id].fri[name] = add;
     }
 }
-   
