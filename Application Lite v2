@@ -130,6 +130,7 @@ contract UserAuthentication {
 contract UserContents {
     //date input
     struct chat {
+        uint[] index;
         string[] date;
         address[] data;        
     }
@@ -137,16 +138,28 @@ contract UserContents {
     mapping(address => mapping(address => chat)) content;
     
     function transaction(address s, address r, string memory dat, address con) public {
+        uint v = content[s][r].date.length;
+        content[s][r].index.push(v);
         content[s][r].date.push(dat);
         content[s][r].data.push(con);
     }
-    //Get content
-    function getContent(address s, address r) public {
-           
+    //Testing Function
+    function getindex(address s, address r)public view returns(uint){
+        return content[s][r].date.length; 
     }
     
-    function delContent(address s, address r, string memory dat, ) public {
-        delete content[s][r].tran[dat]; 
+    //Get content
+    function getContent(address s, address r) public returns (uint[] memory, string[] memory, address[] memory) {
+        uint[] memory indexT = content[s][r].index;
+        string[] memory dateT = content[s][r].date;
+        address[] memory dataT = content[s][r].data;
+        return (indexT, dateT, dataT);
+    }
+    
+    function delContent(address s, address r, uint id) public {
+        delete content[s][r].date[id]; 
+        delete content[s][r].data[id];
+        delete content[s][r].index[id];
     }
 }
 
@@ -185,4 +198,3 @@ contract UserFriends {
         SedFri[id].fri[name] = add;
     }
 }
-
