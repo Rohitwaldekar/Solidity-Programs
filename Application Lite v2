@@ -130,16 +130,22 @@ contract UserAuthentication {
 contract UserContents {
     //date input
     struct chat {
-        mapping(string => address) tran;
+        string[] date;
+        address[] data;        
     }
 
     mapping(address => mapping(address => chat)) content;
     
     function transaction(address s, address r, string memory dat, address con) public {
-        content[s][r].tran[dat] = con;
+        content[s][r].date.push(dat);
+        content[s][r].data.push(con);
     }
     //Get content
-    function delContent(address s, address r, string memory dat) public {
+    function getContent(address s, address r) public {
+           
+    }
+    
+    function delContent(address s, address r, string memory dat, ) public {
         delete content[s][r].tran[dat]; 
     }
 }
@@ -179,3 +185,4 @@ contract UserFriends {
         SedFri[id].fri[name] = add;
     }
 }
+
