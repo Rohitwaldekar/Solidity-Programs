@@ -2,22 +2,20 @@ pragma solidity >=0.4.22 <0.7.0;
 
 //To remove account, must delUser, remove UserInformation, remove authentication constrains
 
-
 //Basically use To Find Perticular Friend
 contract Users {
     //Map uName with uId
-    mapping(string => address) UList;
+    mapping(string => address) public UList;
     //Must call by New User instance
-    function addUser(string memory name, address id) public {
+    function addUser( address id, string memory name) public {
+        require(msg.sender == id);
         UList[name] = id;
     }
-    
-    function getUser(string memory name) public view returns(address) {
-        return UList[name];
-    }
+
     //Remove User
     //Must call by User instance
     function delUser(string memory name) public {
+        require(msg.sender == UList[name]);
         delete UList[name];
     }
 }
@@ -32,11 +30,14 @@ contract UserInformation {
         string uCity;
         string uCollege;   
     }
+    
     mapping(address => data) public Person;
+    
+    //To get UserInfoby using use User contract
     
     function newUser(address id, address photo, string memory name, string memory dob, string memory city, string memory college)
     public {
-
+        require(msg.sender == id);
         Person[id].uPhoto = photo;
         Person[id].uName = name;
         Person[id].uDOB = dob;
@@ -45,26 +46,32 @@ contract UserInformation {
     }
     
     function delUser(address id) public {
+        require(msg.sender == id);
         delete Person[id];
     }
     
     function setPhoto(address id, address photo) public {
+        require(msg.sender == id);
         Person[id].uPhoto = photo;
     }
     
     function setName(address id, string memory name) public {
+        require(msg.sender == id);
         Person[id].uName = name;
     }
     
     function setDOB(address id, string memory dob) public {
+        require(msg.sender == id);
         Person[id].uDOB = dob;   
     }
     
     function setCity(address id, string memory city) public {
+        require(msg.sender == id);
         Person[id].uCity = city;
     }
     
     function setCollege(address id, string memory college) public {
+        require(msg.sender == id);
         Person[id].uCollege = college;
     }
 }
@@ -78,32 +85,40 @@ contract UserAuthentication {
         string question;
         string answer;   
     }
-    mapping(address => auth) public constrains;
+    mapping(address => auth) constrains;
     
-    function regiter(address id, string memory name, string memory pass, string memory que, string memory ans) public {
-        uName = name;
-        uPass = pass;
-        uId = id;
-        question = que;
-        answer = ans;
+    function delAuth(address id) public {
+        require(msg.sender == id);
+        delete constrains[id];
     }
     
-    function authenticate(string memory name, string memory pass) public view returns(bool) {
-        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(uName)) && 
-        keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(uPass))) {
+    function regiter(address id, string memory name, string memory pass, string memory que, string memory ans) public {
+        require(msg.sender == id);
+        constrains[id].uName = name;
+        constrains[id].uPass = pass;
+        constrains[id].question = que;
+        constrains[id].answer = ans;
+    }
+    
+    function authenticate(address id, string memory name, string memory pass) public view returns(bool) {
+        require(msg.sender == id);
+        if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(constrains[id].uName)) && 
+        keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(constrains[id].uPass))) {
             return true;
         }
         else
             return false;
     }
     
-    function changePass(string memory pass) public {
-        uPass = pass;
+    function changePass(address id, string memory pass) public {
+        require(msg.sender == id);
+        constrains[id].uPass = pass;
     }
     
-    function forgrtPass(string memory que, string memory ans) public view returns(bool) {
-        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(question)) && 
-        keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(answer))) {
+    function forgrtPass(address id, string memory que, string memory ans) public view returns(bool) {
+        require(msg.sender == id);
+        if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(constrains[id].question)) && 
+        keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(constrains[id].answer))) {
             return true;
         }
         else
