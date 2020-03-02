@@ -198,3 +198,37 @@ contract UserFriends {
         SedFri[id].fri[name] = add;
     }
 }
+
+contract UserInformation {
+    //Profile data
+    struct data{
+        address uPhoto;
+        string uName;
+    }
+    
+    mapping(address => data) public Person;
+    
+    //To get UserInfoby using use User contract
+    
+    function newUser(address id, address photo, string memory name)
+    public {
+        require(msg.sender == id);
+        Person[id].uPhoto = photo;
+        Person[id].uName = name;
+    }
+    
+    function delUser(address id) public {
+        require(msg.sender == id);
+        delete Person[id];
+    }
+    
+    function setPhoto(address id, address photo) public {
+        require(msg.sender == id);
+        Person[id].uPhoto = photo;
+    }
+    
+    function setName(address id, string memory name) public {
+        require(msg.sender == id);
+        Person[id].uName = name;
+    }
+}
