@@ -46,3 +46,20 @@ contract UserAuthentication {
             return false;
     }
 }
+
+contract Users {
+    //Map name with userName
+    mapping(string => string) public UList;
+    //Must call by New User instance
+    function addUser(address id, string memory name, string memory userName) public {
+        require(msg.sender == id);
+        UList[name] = userName;
+    }
+
+    //Remove User
+    //Must call by User instance
+    function delUser(address id, string memory name) public {
+        require(msg.sender == id);
+        delete UList[name];
+    }
+}
