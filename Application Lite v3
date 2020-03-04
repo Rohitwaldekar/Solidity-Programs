@@ -47,6 +47,42 @@ contract UserAuthentication {
     }
 }
 
+contract UserInformation {
+    
+    struct data{
+        address uPhoto;
+        string uName;   
+    }
+    
+    mapping(string => data) Person;
+    
+    function getInfo(string memory userName)public view returns(address, string){
+        return (Person[userName].uPhoto, Person[userName].uName);
+    }
+    
+    function newUser(string memory userName, address id, address photo, string memory name)
+    public {
+        require(msg.sender == id);
+        Person[userName].uPhoto = photo;
+        Person[userName].uName = name;
+    }
+    
+    function delUser(address id, string memory userName) public {
+        require(msg.sender == id);
+        delete Person[userName];
+    }
+    
+    function setPhoto(address id, string memory userName, address photo) public {
+        require(msg.sender == id);
+        Person[userName].uPhoto = photo;
+    }
+    
+    function setName(address id, string memory userName, string memory name) public {
+        require(msg.sender == id);
+        Person[userName].uName = name;
+    }
+}
+
 contract Users{
     
     mapping(string => string) UList;
