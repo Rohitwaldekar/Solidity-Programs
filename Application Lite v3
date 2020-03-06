@@ -101,3 +101,17 @@ contract Users{
         return UList[name];
     }
 }
+
+contract Container {
+   
+   string[] onlines;
+   
+   function join(string memory name){
+       onlines.push(name);
+   }
+   
+   function left(uint i){
+       delete onlines[i];
+   }
+   
+}
