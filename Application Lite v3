@@ -115,3 +115,34 @@ contract Container {
    }
    
 }
+
+contract UserContents {
+    
+    struct chat {
+        bool flag;
+        address[] data;        
+    }
+
+    mapping(address => mapping(address => chat)) content;
+    
+    function transaction(address s, address r,bool f, address con) public {
+        if(msg.sender == s || msg.sender == r){
+        content[s][r].flag = f;
+        content[s][r].data.push(con);
+        }
+    } 
+    
+    function getContent(address s, address r) public view returns (bool, address[] memory) {
+        if(msg.sender == s || msg.sender == r){
+            address[] memory dataT = content[s][r].data;
+            return (content[s][r].flag, dataT);
+        }
+    }
+    
+    function delContent(address s, address r, uint id) public {
+        if(msg.sender == s || msg.sender == r){
+            delete content[s][r].data[id];
+            delete content[s][r].flag;
+        }
+    }
+}
