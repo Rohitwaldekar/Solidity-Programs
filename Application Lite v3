@@ -8,6 +8,7 @@ contract UserAuthentication {
         string uPass;
         string question;
         string answer;   
+        string unlock;
     }
     mapping(string => auth) constrains;
     
@@ -20,6 +21,7 @@ contract UserAuthentication {
         constrains[userName].id = id;
         constrains[userName].name = name;
         constrains[userName].uPass = pass;
+        constrains[userName].unlock = pass;
         constrains[userName].question = que;
         constrains[userName].answer = ans;
     }
@@ -33,19 +35,20 @@ contract UserAuthentication {
     }
     
     function changePass(address id, string memory userName, string memory pass) public {
-        require(msg.sender == id);
+           require(msg.sender == id);
         constrains[userName].uPass = pass;
     }
     
-    function forgrtPass(string memory userName, string memory que, string memory ans) public view returns(bool) {
+    function forgrtPass(string memory userName, string memory que, string memory ans) public view returns(string memory) {
         if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(constrains[userName].question)) && 
         keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(constrains[userName].answer))) {
-            return true;
+            return constrains[userName].unlock;
         }
         else
-            return false;
+            return '';
     }
 }
+
 
 contract UserInformation {
     
