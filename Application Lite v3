@@ -107,13 +107,15 @@ contract Users{
 
 contract Container {
    
-   string[] onlines;
+   string[] public onlines;
    
-   function join(string memory name){
+   function join(address id, string memory name) public{
+       require(msg.sender == id);
        onlines.push(name);
    }
    
-   function left(uint i){
+   function left(address id, uint i) public{
+       require(msg.sender == id);
        delete onlines[i];
    }
    
