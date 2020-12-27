@@ -6,7 +6,8 @@ contract Users{
         address acHash;
         string uType;
         string name;
-        string uPass;
+        string iPass;
+        string oPass;
         string question;
         string answer; 
     }
@@ -23,35 +24,33 @@ contract Users{
         container[userName].acHash = acHash;
         container[userName].uType = userType;
         container[userName].name = name;
-        container[userName].uPass = pass;
+        container[userName].iPass = pass;
+        container[userName].oPass = pass;
         container[userName].question = que;
         container[userName].answer = ans;
     }
     
-    function authenticate(string memory userName, string memory pass) public view returns(address) {
-        address s;
-        if(keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(container[userName].uPass))) {
-            s = container[userName].acHash;
-        }
-        return s;
+    function authenticate(string memory userName, string memory pass) public view returns(address, string memory) {
+        require(keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(container[userName].oPass)));
+        return (container[userName].acHash, container[userName].iPass);
     }
     
-    function changePass(address acHash, string memory userName, string memory pass) public {
-           require(msg.sender == acHash);
-        container[userName].uPass = pass;
+    function changePass(string memory userName, string memory pass) public {
+        require(msg.sender == container[userName].acHash);
+        container[userName].oPass = pass;
     }
     
-    function forgrtPass(string memory userName, string memory que, string memory ans) public view returns(bool) {
+    function forgrtPass(string memory userName, string memory que, string memory ans) public view returns(string memory) {
         if(keccak256(abi.encodePacked(que)) == keccak256(abi.encodePacked(container[userName].question)) && 
         keccak256(abi.encodePacked(ans)) == keccak256(abi.encodePacked(container[userName].answer))) {
-            return true;
+            return container[userName].oPass;
         }
         else
-            return false;
+            return "";
     }
     
-    function delAuth(address acHash, string memory userName) public {
-        require(msg.sender == acHash);
+    function delUser(string memory userName,string memory pass) public {
+        require(keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(container[userName].oPass)));
         delete container[userName];
     }
     
