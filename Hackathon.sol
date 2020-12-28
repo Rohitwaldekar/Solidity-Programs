@@ -14,7 +14,7 @@ contract Users{
     mapping(string => auth) container;
     
     function register(string memory userType, string memory name,string memory userName, string memory pass, string memory que, string memory ans, address acHash) public {
-        require(keccak256(abi.encodePacked(userType)) != keccak256(abi.encodePacked("")) &&
+            require(keccak256(abi.encodePacked(userType)) != keccak256(abi.encodePacked("")) &&
             keccak256(abi.encodePacked(name)) != keccak256(abi.encodePacked("")) &&
             keccak256(abi.encodePacked(userName)) != keccak256(abi.encodePacked("")) &&
             keccak256(abi.encodePacked(pass)) != keccak256(abi.encodePacked("")) &&
@@ -52,6 +52,20 @@ contract Users{
     function delUser(string memory userName,string memory pass) public {
         require(keccak256(abi.encodePacked(pass)) == keccak256(abi.encodePacked(container[userName].oPass)));
         delete container[userName];
+    }
+    
+    function checkUser(string memory userName) public view returns(bool){
+        if(keccak256(abi.encodePacked(container[userName].name)) != keccak256(abi.encodePacked("")))
+            return false;
+        else
+            return true;
+    }
+    
+    function searchUser(string memory userName) public view returns(string memory, string memory){
+        if(keccak256(abi.encodePacked(container[userName].name)) != keccak256(abi.encodePacked("")))
+            return (container[userName].uType, container[userName].name);
+        else
+            revert("User not Available");
     }
     
 }
