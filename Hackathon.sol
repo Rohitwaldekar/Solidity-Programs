@@ -69,3 +69,80 @@ contract Users{
     }
     
 }
+
+contract Cutomer {
+
+    function replaceBattory() public{
+        
+    }
+    
+    function searchNearBy() public{
+        
+    }
+    
+    function call() public{
+        
+    }
+    
+    function rasieTicket() public{
+        
+    }
+}
+
+
+contract ServiceProvide {
+
+    function xreplaceBattory() public{
+        
+    }
+    
+    function xsearchNearBy() public{
+        
+    }
+    
+    function xcall() public{
+        
+    }
+    
+    function xrasieTicket() public{
+        
+    }
+}
+
+contract Vendor {
+
+    function xreplaceBattory() public{
+        
+    }
+    
+    function xsearchNearBy() public{
+        
+    }
+    
+    function xcall() public{
+        
+    }
+    
+    function xrasieTicket() public{
+        
+    }
+}
+
+contract Batorry {
+
+    function xreplaceBattory() public{
+        
+    }
+    
+    function xsearchNearBy() public{
+        
+    }
+    
+    function xcall() public{
+        
+    }
+    
+    function xrasieTicket() public{
+        
+    }
+}
